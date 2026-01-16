@@ -1,6 +1,8 @@
 <script setup>
 import api from '@/axois.js'
 import { onMounted, ref, } from 'vue'
+import { watch } from 'vue'
+import { useRoute } from 'vue-router'
 import AuctionsCard from '@/components/AuctionsCard.vue'
 import AuctionCardSketleton from '@/components/skeleton/AuctionCardSketleton.vue'
 import { NewspaperIcon } from '@heroicons/vue/24/outline'
@@ -9,6 +11,8 @@ import Card from '@/components/Card.vue'
 import Section from '@/components/Section.vue'
 import Pagination from '@/components/Pagination.vue'
 
+
+const route = useRoute()
 const auctions = ref([])
 const categories = ref([])
 const loading = ref(true)
@@ -22,10 +26,18 @@ const pagination = ref({
 })
 const fetchAuctions = async (page = 1) => {
   loading.value = true
+
   try {
-    const res = await api.get('/auctions', {
-      params: { page }
-    })
+    const params = {
+      page,
+      ...(route.query.q ? { q: route.query.q } : {})
+    }
+
+    const url = route.query.q
+      ? '/auctions/search'
+      : '/auctions'
+
+    const res = await api.get(url, { params })
 
     auctions.value = res.data.data
     pagination.value.page = res.data.meta.current_page
@@ -37,6 +49,12 @@ const fetchAuctions = async (page = 1) => {
     loading.value = false
   }
 }
+watch(
+  () => route.query.q,
+  () => {
+    fetchAuctions(1)
+  }
+)
 
 const fetchCategories = async () => {
   try {
@@ -72,7 +90,7 @@ onMounted(async () => {
       </Card>
 
       <!-- Kartica sa oglasima -->
-      <Card  width="lg:w-4/5" class="space-y-2">
+      <Card width="lg:w-4/5" class="space-y-2">
         <div class="flex flex-row items-start border-b border-gray-300">
           <NewspaperIcon class="w-6 h-6 text-sky-700 text-base me-2" />
           <h3 class="text-gray-700 pb-2">
@@ -89,11 +107,7 @@ onMounted(async () => {
     </div>
   </Section>
   <!-- Paginacija na dnu -->
-  <Pagination
-  :current-page="pagination.page"
-  :last-page="pagination.lastPage"
-  @change="fetchAuctions"
-/>
+  <Pagination :current-page="pagination.page" :last-page="pagination.lastPage" @change="fetchAuctions" />
 
 
 </template>
