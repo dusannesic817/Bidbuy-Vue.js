@@ -1,5 +1,5 @@
 <script setup>
-
+import logo from '@/assets/images/auction.svg'
 </script>
 
 
@@ -9,7 +9,7 @@
 
         <!-- Ilustracija-->
         <div class="p-8 hidden md:block">
-            <img src="" alt="Moj Psiholog Logo" class="w-[500px] h-full"/>
+            <img :src="logo" alt="Moj Psiholog Logo" class="w-[500px] h-full"/>
         </div>
 
         <!-- Login kartica -->
@@ -39,8 +39,8 @@
                     <a href="#" class="text-gray-700 hover:underline">Forgot the password?</a>
                 </div>
 
-                <button
-                    class="w-full bg-orange-300 hover:bg-orange-300 text-white font-semibold py-3 rounded-3xl transition">
+                <button type="submit"
+                    class="w-full bg-orange-300 hover:bg-orange-300 text-white font-semibold py-3 rounded-3xl transition cursor-pointer">
                     Login
                 </button>
             </form>

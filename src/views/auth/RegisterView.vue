@@ -1,0 +1,103 @@
+<script setup>
+import logo from '@/assets/images/auction.svg'
+</script>
+
+<template>
+    <div class="min-h-screen flex items-center justify-center px-8 bg-gray-50">
+    <div class="flex flex-col md:flex-row bg-white border border-gray-100 shadow-lg rounded-3xl w-full md:max-w-4xl">
+
+        <!-- Ilustracija-->
+        <div class="p-8 hidden md:block">
+            <img :src="logo" alt="Moj Psiholog Logo" class="w-[500px] h-full"/>
+        </div>
+
+        <!-- Login kartica -->
+        <div class="p-8 w-full md:max-w-md relative">
+            <h2 class="text-center text-3xl font-semibold text-gray-700 pt-5 pb-10">Register</h2>
+
+            <form class="space-y-2 border-b border-gray-200 pb-4 mb-4">
+                <div>
+                    <div class="relative">
+                        <i class="fa-regular fa-user absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 ms-1"></i>
+                        <input type="email"
+                            class="w-full p-3 pl-10 rounded-3xl border border-gray-300 focus:border-transparent focus:ring-1 focus:ring-orange-400 outline-none"
+                            placeholder="Name" />
+                    </div>
+                </div>
+                <div>
+                    <div class="relative">
+                        <i class="fa-regular fa-user absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 ms-1"></i>
+                        <input type="email"
+                            class="w-full p-3 pl-10 rounded-3xl border border-gray-300 focus:border-transparent focus:ring-1 focus:ring-orange-400 outline-none"
+                            placeholder="Surname" />
+                    </div>
+                </div>
+                <div>
+                    <div class="relative">
+                        <i class="fa-solid fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 ms-1"></i>
+                        <input type="email"
+                            class="w-full p-3 pl-10 rounded-3xl border border-gray-300 focus:border-transparent focus:ring-1 focus:ring-orange-400 outline-none"
+                            placeholder="Email" />
+                    </div>
+                </div>
+                <div>
+                    <div class="relative">
+                        <i class="fa-solid fa-location-dot absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 ms-1"></i>
+                        <input type="email"
+                            class="w-full p-3 pl-10 rounded-3xl border border-gray-300 focus:border-transparent focus:ring-1 focus:ring-orange-400 outline-none"
+                            placeholder="Address" />
+                    </div>
+                </div>
+                <div>
+                    <div class="relative">
+                        <i class="fa-solid fa-phone absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 ms-1"></i>
+                        <input type="email"
+                            class="w-full p-3 pl-10 rounded-3xl border border-gray-300 focus:border-transparent focus:ring-1 focus:ring-orange-400 outline-none"
+                            placeholder="Number" />
+                    </div>
+                </div>
+                <div>
+                    <div class="relative">
+                        <i class="fa-solid fa-unlock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 ms-1"></i>
+                        <input type="email"
+                            class="w-full p-3 pl-10 rounded-3xl border border-gray-300 focus:border-transparent focus:ring-1 focus:ring-orange-400 outline-none"
+                            placeholder="Password" />
+                    </div>
+                </div>
+
+                <div>
+                    <div class="relative">
+                        <i class="fa-solid fa-unlock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 ms-1"></i>
+                        <input type="password"
+                            class="w-full p-3 pl-10 rounded-3xl border border-gray-300 focus:border-transparent focus:ring-1 focus:ring-orange-400 outline-none"
+                            placeholder="Reapet password" />
+                    </div>
+                </div>
+
+                <div class="flex justify-center text-sm">
+                    <a href="#" class="text-gray-700 hover:underline">Forgot the password?</a>
+                </div>
+
+                <button
+                    class="w-full bg-orange-300 hover:bg-orange-300 text-white font-semibold py-3 rounded-3xl transition">
+                    Register
+                </button>
+            </form>
+
+            <!-- Google dugme -->
+            <button
+                class="w-full mt-4 flex items-center justify-center gap-2 border border-orange-400 hover:bg-orange-50 text-gray-700 font-medium py-3 rounded-3xl transition">
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google" />
+                Register by Google
+            </button>
+
+            <p class="text-center text-gray-600 text-sm mt-4">
+                Already have account?
+                <a href="#" class="text-sage-700 font-semibold hover:underline">Login</a>
+            </p>
+        </div>
+
+    </div>
+
+</div>
+</template>
