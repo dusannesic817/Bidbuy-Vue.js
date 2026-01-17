@@ -12,8 +12,16 @@
 </script>
 
 <template>
+        <transition
+        enter-active-class="transition-all duration-400 ease-out"
+        leave-active-class="transition-all duration-400 ease-in"
+        enter-from-class="opacity-0 -translate-x-full"
+        enter-to-class="opacity-100 translate-x-0"
+        leave-from-class="opacity-100 translate-x-0"
+        leave-to-class="opacity-0 -translate-x-full"
+    >
         <!-- Sidebar -->
-        <aside id="sidebar" class="w-48 bg-white shadow-lg p-4  transition-all duration-300 overflow-hidden">
+        <aside class="w-48 bg-white shadow-lg p-4 transition-all overflow-hidden">
             <div class="flex items-center justify-between mb-2 text-gray-700 border-b pb-2 border-gray-300">
                 <!-- Ikonica + ime + email -->
                 <div class="flex items-center gap-2">
@@ -79,5 +87,6 @@
                 <span class="font-medium">Kurs: <span class="text-gray-800">118.22 RSD</span></span>
             </div>
         </aside>
+        </transition>
 
 </template>

@@ -1,12 +1,11 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { defineEmits } from 'vue'
-
-
 import { useUIStore } from '@/stores/ui'
+import { useAuthStore } from '@/stores/auth'
 
 const uiStore = useUIStore()
+const authStore = useAuthStore()
 
 const router = useRouter()
 const route = useRoute()
@@ -23,6 +22,12 @@ const submitSearch = () => {
     })
 }
 
+const handleLogout = async () => {
+    const result = await authStore.logout()
+    if (result.success) {
+        router.push('/login')
+    }
+}
 </script>
 
 <template>
@@ -50,10 +55,17 @@ const submitSearch = () => {
             </div>
 
             <!-- CTA button -->
-            <div class="hidden md:block">
+            <div class="hidden md:flex items-center space-x-4">
                 <RouterLink to="#"
                     class="bg-orange-400 text-white px-4 py-2 rounded-full hover:bg-orange-500 transition">Post a Bid
                 </RouterLink>
+
+                <div v-if="authStore.isAuthenticated" class="flex items-center space-x-3">
+                    <p class="text-indigo-900 font-medium">{{ authStore.user?.name }}</p>
+                    <button @click="handleLogout" class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition">
+                        Logout
+                    </button>
+                </div>
             </div>
 
             <!-- Mobile menu toggle -->
@@ -75,8 +87,14 @@ const submitSearch = () => {
                 <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 text-sky-700">🔍</button>
             </form>
 
-            <RouterLink to="#" class="block bg-sky-700 text-white text-center px-4 py-2 rounded-full mx-2 mt-2">Post
-                RouterLink Bid</RouterLink>
+            <RouterLink to="#" class="block bg-sky-700 text-white text-center px-4 py-2 rounded-full mx-2 mt-2">Post a Bid</RouterLink>
+
+            <div v-if="authStore.isAuthenticated" class="mx-2 mt-2">
+                <p class="text-indigo-900 font-medium text-center mb-2">{{ authStore.user?.name }}</p>
+                <button @click="handleLogout" class="w-full bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition">
+                    Logout
+                </button>
+            </div>
         </div>
     </nav>
 

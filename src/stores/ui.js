@@ -4,7 +4,7 @@ import { ref } from 'vue'
 
 export const useUIStore = defineStore('ui', () => {
   // Sidebar
-  const showSidebar = ref(false)
+  const showSidebar = ref(true)
   const toggleSidebar = () => { showSidebar.value = !showSidebar.value }
 
   // Navbar
