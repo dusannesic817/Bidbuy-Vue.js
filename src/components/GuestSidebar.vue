@@ -7,7 +7,7 @@ import { BellAlertIcon } from '@heroicons/vue/24/outline'
 import { HandThumbUpIcon } from '@heroicons/vue/24/outline'
 import { StarIcon } from '@heroicons/vue/24/outline'
 import { UserCircleIcon } from '@heroicons/vue/24/outline'
-import { CurrencyEuroIcon } from '@heroicons/vue/24/outline'
+import { ArrowLeftEndOnRectangleIcon } from '@heroicons/vue/16/solid';
 </script>
 
 <template>
@@ -17,20 +17,23 @@ import { CurrencyEuroIcon } from '@heroicons/vue/24/outline'
             <!-- Ikonica + ime + email -->
             <div class="flex items-center">
                 <div class="space-y-1">
-                    <h2 class="text-lg font-semibold">Please Log in</h2>
-                    <p class="text-sm text-gray-500">Ukoliko zelite da objavljujete oglase i licitirate, morate biti prijavljeni</p>
+                    <h2 class="text-lg font-semibold">Please Login</h2>
+                    <p class="text-sm text-gray-500">If you want to post ads and place bids, you must be logged in.</p>
                 </div>
-            </div>                
+            </div>
         </div>
-        <div class="flex flex-col items-center mb-2 text-gray-700 border-b pb-2 border-gray-300 space-y-2">                                   
+        <div class="flex flex-col items-center mb-2 text-gray-700 border-b pb-2 border-gray-300 space-y-2">
             <RouterLink to="/login"
-                    class="bg-orange-300 text-white w-full text-center py-2 rounded-full hover:bg-orange-400 transition">Login
-            </RouterLink>                                      
+                class="flex items-center justify-center gap-2 bg-red-500 text-white w-full text-center py-2 rounded-full hover:bg-red-400 transition">
+                <ArrowLeftEndOnRectangleIcon class="w-5 h-5" />
+                <span>Login</span>
+            </RouterLink>
             <RouterLink to="/register"
-                    class="bg-orange-400 text-white w-full text-center py-2 rounded-full hover:bg-orange-500 transition">Register
-            </RouterLink>                                                
+                class="bg-orange-400 text-white w-full text-center py-2 rounded-full hover:bg-orange-500 transition">
+                Register
+            </RouterLink>
         </div>
-        
+
         <ul class="space-y-1 border-b pb-2 border-gray-200 text-sm blur-xs pointer-events-none select-none">
             <li>
                 <div class="flex items-center gap-3 px-2 py-2 rounded-md bg-sky-100 text-sky-700 font-semibold">
@@ -40,7 +43,7 @@ import { CurrencyEuroIcon } from '@heroicons/vue/24/outline'
             </li>
 
             <li>
-                <div class="flex items-center gap-3 px-2 py-2 rounded-md">                        
+                <div class="flex items-center gap-3 px-2 py-2 rounded-md">
                     <BriefcaseIcon class="w-5 h-5 text-sky-700 text-base" />
                     <span class="text-gray-700 font-medium">My Bids</span>
                 </div>
@@ -52,21 +55,21 @@ import { CurrencyEuroIcon } from '@heroicons/vue/24/outline'
                     <span class="text-gray-700 font-medium">Messages</span>
                 </div>
             </li>
-            
+
             <li>
                 <div class="flex items-center gap-3 px-2 py-2 rounded-md">
                     <BellAlertIcon class="w-5 h-5 text-sky-700 text-base" />
                     <span class="text-gray-700 font-medium">Notification</span>
                 </div>
             </li>
-            
+
             <li>
                 <div class="flex items-center gap-3 px-2 py-2 rounded-md">
                     <HandThumbUpIcon class="w-5 h-5 text-sky-700 text-base" />
                     <span class="text-gray-700 font-medium">Reviews</span>
                 </div>
             </li>
-            
+
             <li>
                 <div class="flex items-center gap-3 px-2 py-2 rounded-md">
                     <StarIcon class="w-5 h-5 text-sky-700 text-base" />
@@ -74,7 +77,7 @@ import { CurrencyEuroIcon } from '@heroicons/vue/24/outline'
                 </div>
             </li>
         </ul>
-        
+
         <!-- ✅ BLUR SEKCIJA -->
         <div class="border-b pb-2 pt-2 border-gray-200 text-sm blur-xs pointer-events-none select-none">
             <div class="flex items-center gap-3 px-2 py-2 rounded-md">
@@ -82,5 +85,5 @@ import { CurrencyEuroIcon } from '@heroicons/vue/24/outline'
                 <span class="text-gray-700 font-medium">My Profile</span>
             </div>
         </div>
-    </aside>        
+    </aside>
 </template>
