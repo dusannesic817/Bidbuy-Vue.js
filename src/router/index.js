@@ -9,47 +9,41 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-        path: '/',
-        name: 'Home',
-        component: HomeView
+      path: '/',
+      name: 'Home',
+      component: HomeView
     },
     {
       path: '/auctions/:id',
-      name : "Auction",
-      component: AuctionView
+      name: 'Auction',
+      component: AuctionView,
     },
     {
       path: '/categories/:id',
-      name : "Category",
+      name: 'Category',
       component: CategoryView
     },
-   {
+    {
       path: '/login',
       name: 'Login',
       component: LoginView,
       meta: { requiresGuest: true }
-   }
-
-  ],
+    }
+  ]
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
-  
+
   authStore.clearErrors()
-  if (!authStore.user && !authStore.loading) {
-    await authStore.fetchUser()
-  }
+
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     next('/login')
-  } 
-  else if (to.meta.requiresGuest && authStore.isAuthenticated) {
-    next('/') 
-  } 
-  else {
+  } else if (to.meta.requiresGuest && authStore.isAuthenticated) {
+    next('/')
+  } else {
     next()
   }
 })
-
 
 export default router

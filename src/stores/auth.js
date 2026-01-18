@@ -8,6 +8,8 @@ export const useAuthStore = defineStore('auth', () => {
   const loading = ref(false)
   const errors = ref(null)
   const message = ref(null)
+  const checked = ref(false)
+
 
   const register = async (credentials) => {
     loading.value = true
@@ -24,15 +26,11 @@ export const useAuthStore = defineStore('auth', () => {
       
       return { success: true, data: response.data }
     } catch (error) {
-      
       if (error.response?.data?.errors) {
-        // Laravel validacione greške (422)
         errors.value = error.response.data.errors
       } else if (error.response?.data?.message) {
-        // Laravel custom poruka (401, 500, etc.)
         errors.value = { message: error.response.data.message }
       } else {
-        
         errors.value = { message: 'An error occurred. Please try again.' }
       }
       return { success: false, errors: errors.value }
@@ -41,7 +39,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
- 
   const login = async (credentials) => {
     loading.value = true
     errors.value = null
@@ -57,15 +54,11 @@ export const useAuthStore = defineStore('auth', () => {
       
       return { success: true, data: response.data }
     } catch (error) {
-      
       if (error.response?.data?.errors) {
-        // Laravel validacione greške (422)
         errors.value = error.response.data.errors
       } else if (error.response?.data?.message) {
-        // Laravel custom poruka (401 - "Incorrect email or password")
         errors.value = { message: error.response.data.message }
       } else {
-    
         errors.value = { message: 'An error occurred. Please try again.' }
       }
       return { success: false, errors: errors.value }
@@ -74,7 +67,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  // Logout
   const logout = async () => {
     loading.value = true
     
@@ -96,26 +88,23 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-
-  const fetchUser = async () => {
-    loading.value = true
-    
-    try {
-      const response = await api.get('/user')
-      user.value = response.data
-      isAuthenticated.value = true
-    } catch (error) {
-      user.value = null
-      isAuthenticated.value = false
-    } finally {
-      loading.value = false
-    }
-  }
-
   const clearErrors = () => {
     errors.value = null
     message.value = null
   }
+
+const initAuth = async () => {
+  loading.value = true
+  try {
+    const res = await api.get('/check-auth')
+    isAuthenticated.value = res.data.authenticated
+  } catch {
+    isAuthenticated.value = false
+  } finally {
+    loading.value = false
+     checked.value = true
+  }
+}
 
   return {
     user,
@@ -126,7 +115,8 @@ export const useAuthStore = defineStore('auth', () => {
     register,
     login,
     logout,
-    fetchUser,
-    clearErrors
+    clearErrors,
+    initAuth,
+    checked
   }
 })
