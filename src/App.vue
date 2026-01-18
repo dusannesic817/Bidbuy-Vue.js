@@ -15,7 +15,8 @@ const authStore = useAuthStore();
 <template>
   <Navbar />
   <div class="flex min-h-screen bg-gray-50">
-    <GuestSidebar  />
+    <Sidebar v-if="authStore.isAuthenticated" v-show="uiStore.showSidebar"  />
+    <GuestSidebar v-else  />
     <main class="flex-1 transition-all duration-300">
       <RouterView />
     </main>
