@@ -63,13 +63,7 @@ const handleLogout = async () => {
                     <PlusIcon class="w-5 h-5"/>
                     Post a Bid
                 </RouterLink>
-                <div v-if="authStore.isAuthenticated" class="flex items-center space-x-3">
-                    <p class="text-indigo-900 font-medium">{{ authStore.user?.name }}</p>
-                    <button @click="handleLogout"
-                        class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition">
-                        Logout
-                    </button>
-                </div>
+                
             </div>
 
             <!-- Mobile menu toggle -->

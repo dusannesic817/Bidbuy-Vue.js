@@ -8,7 +8,16 @@
     import { StarIcon } from '@heroicons/vue/24/outline'
     import { UserCircleIcon } from '@heroicons/vue/24/outline'
     import { CurrencyEuroIcon } from '@heroicons/vue/24/outline'
+    import { useAuthStore } from '@/stores/auth'
     
+    const authStore = useAuthStore()
+
+    const handleLogout = async () => {
+    const result = await authStore.logout()
+    if (result.success) {
+        router.push('/login')
+    }
+}
 </script>
 
 <template>
@@ -85,6 +94,12 @@
             <div class="flex items-center gap-3 px-2 py-4 rounded-md text-sm text-gray-700">                
                 <CurrencyEuroIcon class="w-5 h-5 text-sky-700 text-base" />
                 <span class="font-medium">Kurs: <span class="text-gray-800">118.22 RSD</span></span>
+            </div>
+            <div class="border-t border-gray-300">
+                <button @click="handleLogout"
+                        class="text-red-400 w-full px-4 py-2 rounded-lg text-left  transition cursor-pointer hover:bg-red-200">
+                        Logout
+                    </button>
             </div>
         </aside>
         </transition>

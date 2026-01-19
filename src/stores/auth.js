@@ -1,122 +1,58 @@
 import { defineStore } from 'pinia'
 import api, { getCsrfToken } from '@/axois'
-import { ref } from 'vue'
-
-export const useAuthStore = defineStore('auth', () => {
-  const user = ref(null)
-  const isAuthenticated = ref(false)
-  const loading = ref(false)
-  const errors = ref(null)
-  const message = ref(null)
-  const checked = ref(false)
 
 
-  const register = async (credentials) => {
-    loading.value = true
-    errors.value = null
-    message.value = null
-    
-    try {
-      await getCsrfToken()
-      const response = await api.post('/register', credentials)
-      
-      user.value = response.data.user
-      isAuthenticated.value = true
-      message.value = response.data.message
-      
-      return { success: true, data: response.data }
-    } catch (error) {
-      if (error.response?.data?.errors) {
-        errors.value = error.response.data.errors
-      } else if (error.response?.data?.message) {
-        errors.value = { message: error.response.data.message }
-      } else {
-        errors.value = { message: 'An error occurred. Please try again.' }
+export const useAuthStore = defineStore('auth', {
+  state: () => ({
+    user: null,
+    initialized: false,
+    initializing: false,
+    lastState: localStorage.getItem('auth:lastState'), // ⬅️ ključ
+  }),
+
+  getters: {
+    isAuthenticated: (state) => !!state.user,
+    shouldShowAuthUI: (state) => state.lastState === 'auth',
+  },
+
+  actions: {
+    async bootstrap() {
+      if (this.initialized || this.initializing) return
+
+      this.initializing = true
+
+      try {
+        const { data } = await api.get('/user')
+        this.user = data
+        this.lastState = 'auth'
+        localStorage.setItem('auth:lastState', 'auth')
+      } catch {
+        this.user = null
+        this.lastState = 'guest'
+        localStorage.setItem('auth:lastState', 'guest')
+      } finally {
+        this.initialized = true
+        this.initializing = false
       }
-      return { success: false, errors: errors.value }
-    } finally {
-      loading.value = false
-    }
-  }
+    },
 
-  const login = async (credentials) => {
-    loading.value = true
-    errors.value = null
-    message.value = null
-    
-    try {
+    async login(credentials) {
       await getCsrfToken()
-      const response = await api.post('/login', credentials)
-      
-      user.value = response.data.user
-      isAuthenticated.value = true
-      message.value = response.data.message
-      
-      return { success: true, data: response.data }
-    } catch (error) {
-      if (error.response?.data?.errors) {
-        errors.value = error.response.data.errors
-      } else if (error.response?.data?.message) {
-        errors.value = { message: error.response.data.message }
-      } else {
-        errors.value = { message: 'An error occurred. Please try again.' }
-      }
-      return { success: false, errors: errors.value }
-    } finally {
-      loading.value = false
-    }
-  }
+      await api.post('/login', credentials)
 
-  const logout = async () => {
-    loading.value = true
-    
-    try {
-      await api.post('/logout')
-      
-      user.value = null
-      isAuthenticated.value = false
-      message.value = 'Logged out successfully'
-      
-      return { success: true }
-    } catch (error) {
-      console.error('Logout error:', error)
-      user.value = null
-      isAuthenticated.value = false
-      return { success: false }
-    } finally {
-      loading.value = false
-    }
-  }
+      this.user = {}          // optimistic
+      this.lastState = 'auth'
+      localStorage.setItem('auth:lastState', 'auth')
 
-  const clearErrors = () => {
-    errors.value = null
-    message.value = null
-  }
+      await this.bootstrap()
+    },
 
-const initAuth = async () => {
-  loading.value = true
-  try {
-    const res = await api.get('/check-auth')
-    isAuthenticated.value = res.data.authenticated
-  } catch {
-    isAuthenticated.value = false
-  } finally {
-    loading.value = false
-     checked.value = true
-  }
-}
+    logout() {
+      this.user = null
+      this.lastState = 'guest'
+      localStorage.setItem('auth:lastState', 'guest')
 
-  return {
-    user,
-    isAuthenticated,
-    loading,
-    errors,
-    message,
-    register,
-    login,
-    logout,
-    clearErrors,
-    initAuth,
-    checked
-  }
+      api.post('/logout') // fire & forget
+    },
+  },
 })

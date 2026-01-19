@@ -3,6 +3,7 @@ import HomeView from '@/views/HomeView.vue'
 import AuctionView from '@/views/AuctionView.vue'
 import CategoryView from '@/views/CategoryView.vue'
 import LoginView from '@/views/auth/LoginView.vue'
+import RegisterView from '@/views/auth/RegisterView.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const router = createRouter({
@@ -28,22 +29,25 @@ const router = createRouter({
       name: 'Login',
       component: LoginView,
       meta: { requiresGuest: true }
-    }
+    },
+    
   ]
 })
 
-router.beforeEach((to, from, next) => {
+
+router.beforeEach((to) => {
   const authStore = useAuthStore()
 
-  authStore.clearErrors()
-
-  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-    next('/login')
-  } else if (to.meta.requiresGuest && authStore.isAuthenticated) {
-    next('/')
-  } else {
-    next()
+  // 🔥 koristi lastState, ne user
+  if (to.meta.requiresGuest && authStore.lastState === 'auth') {
+    return { name: 'Home' }
   }
+
+  return true
 })
+
+
+
+
 
 export default router

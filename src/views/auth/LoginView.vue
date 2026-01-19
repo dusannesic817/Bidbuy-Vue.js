@@ -13,12 +13,15 @@ const form = ref({
 })
 
 const handleLogin = async () => {
-  const result = await authStore.login(form.value)
+  await authStore.login(form.value)
   
-  if (result.success) {
+  if (authStore.user) {
     router.push('/') 
+  } else {
+    console.log(authStore.error)
   }
 }
+
 </script>
 
 <template>
@@ -34,18 +37,7 @@ const handleLogin = async () => {
       <div class="p-8 w-full md:max-w-md relative">
         <h2 class="text-center text-3xl font-semibold text-gray-700 pt-5 pb-10">Login</h2>
 
-        <!-- Error poruke - Laravel validacija -->
-        <div v-if="authStore.errors" class="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg space-y-1">          
-          <p v-if="authStore.errors.message" class="text-red-600 text-sm">
-            {{ authStore.errors.message }}
-          </p>          
-          <p v-if="authStore.errors.email" class="text-red-600 text-sm">
-            {{ authStore.errors.email[0] }}
-          </p>
-          <p v-if="authStore.errors.password" class="text-red-600 text-sm">
-            {{ authStore.errors.password[0] }}
-          </p>
-        </div>
+        
 
         <form @submit.prevent="handleLogin" class="space-y-5 border-b border-gray-200 pb-4 mb-4">
           <div>

@@ -1,4 +1,7 @@
 <script setup>
+  import { ref } from 'vue'
+
+const imageLoaded = ref(false)
 defineProps({
   auction: {
     type: Object,
@@ -10,7 +13,7 @@ defineProps({
             <a :href="`/auctions/${auction.id}`"
               class="block h-64  rounded-2xl bg-white shadow-md p-4 hover:shadow-lg transition">
               <div class="flex flex-col justify-between h-full">
-                <img :src="auction.image" loading="lazy" :alt="auction.title"
+                <img :src="auction.image"  loading="eager" :alt="auction.title"
                   class="w-full h-32 object-cover rounded-lg mb-2">
                 <h3 class="text-sm font-semibold text-gray-800">{{ auction.title }}</h3>
                 <p class="text-xs text-gray-500 line-clamp-2">{{ auction.short_description }}</p>
