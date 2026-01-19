@@ -14,23 +14,18 @@ onMounted(() => {
   authStore.bootstrap()
 })
 
-
-
 </script>
 <template>
   <Navbar />
 
   <div class="flex min-h-screen bg-gray-50">
-    <!-- ODLUKA PRE BACKEND-A -->
     <Sidebar
       v-if="authStore.shouldShowAuthUI"
       v-show="uiStore.showSidebar"
     />
-
     <GuestSidebar
       v-else
     />
-
     <main class="flex-1">
       <RouterView />
     </main>

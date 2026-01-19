@@ -7,7 +7,7 @@ export const useAuthStore = defineStore('auth', {
     user: null,
     initialized: false,
     initializing: false,
-    lastState: localStorage.getItem('auth:lastState'), // ⬅️ ključ
+    lastState: localStorage.getItem('auth:lastState'),
   }),
 
   getters: {
@@ -40,7 +40,7 @@ export const useAuthStore = defineStore('auth', {
       await getCsrfToken()
       await api.post('/login', credentials)
 
-      this.user = {}          // optimistic
+      this.user = {}          
       this.lastState = 'auth'
       localStorage.setItem('auth:lastState', 'auth')
 
@@ -52,7 +52,7 @@ export const useAuthStore = defineStore('auth', {
       this.lastState = 'guest'
       localStorage.setItem('auth:lastState', 'guest')
 
-      api.post('/logout') // fire & forget
+      api.post('/logout') 
     },
   },
 })

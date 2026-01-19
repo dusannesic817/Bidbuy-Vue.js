@@ -38,11 +38,9 @@ const router = createRouter({
 router.beforeEach((to) => {
   const authStore = useAuthStore()
 
-  // 🔥 koristi lastState, ne user
   if (to.meta.requiresGuest && authStore.lastState === 'auth') {
     return { name: 'Home' }
   }
-
   return true
 })
 
